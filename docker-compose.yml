@@ -1,6 +1,6 @@
 version: '3'
 services:
-  web:
+  api:
     build:
       dockerfile: ./docker/dev/Dockerfile
       context: ../hacka-api/.
@@ -13,3 +13,14 @@ services:
       - rabbitmq
     volumes:
       - ../hacka-api/.:/src
+  worker:
+    build:
+      dockerfile: ./docker/dev/Dockerfile
+      context: ../hacka-worker/.
+    command: "yarn dev"
+    depends_on:
+     - rabbitmq
+    links:
+      - rabbitmq
+    volumes:
+      - ../hacka-worker/.:/src
