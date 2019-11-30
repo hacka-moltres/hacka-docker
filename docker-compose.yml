@@ -1,0 +1,15 @@
+version: '3'
+services:
+  web:
+    build:
+      dockerfile: ./docker/dev/Dockerfile
+      context: ../hacka-api/.
+    command: "yarn dev"
+    depends_on:
+     - rabbitmq
+    ports:
+      - "3000:3000"
+    links:
+      - rabbitmq
+    volumes:
+      - ../hacka-api/.:/src
